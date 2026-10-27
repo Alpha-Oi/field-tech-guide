@@ -1,0 +1,23 @@
+.env
+.env.*
+!.env.example
+node_modules/
+__pycache__/
+.DS_Store
+.autopilot/serve.*
+
+# Внутренние материалы компании и приватные данные — в публичный репозиторий не попадают
+*.docx
+*.pdf
+*.jpg
+*.jpeg
+регламент*.txt
+private/
+_private/
+dist/
+.autopilot/
+*.doc
+*.xls
+*.xlsx
+*.odt
+*.rtf

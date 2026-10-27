@@ -1,0 +1,10 @@
+# Автообновление действий GitHub Actions из .github/workflows/ (версии в них закреплены).
+# Зависимостей Python и npm в проекте нет (только стандартная библиотека), поэтому для них ничего не настроено.
+version: 2
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    commit-message:
+      prefix: "chore"

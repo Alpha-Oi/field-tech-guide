@@ -1,0 +1,50 @@
+name: Предложение
+description: Идея нового шага, возможности страницы или улучшения сборки
+title: "[Предложение]: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Спасибо за идею. Расскажите, какую задачу нужно решить, а не только как это сделать.
+
+        **Не прикладывайте данные компании и клиентов:** названия приложений, ники, имена, ссылки, цены, номера заявок, телефоны и снимки экрана с ними. Всё, что принадлежит компании, в проекте — переменные профиля (`guide/profiles/VARS.md`).
+
+        Тексты гайда остаются честными: не принимаются предложения, где нужно давить на клиента, завышать цены, дробить услуги, имитировать работу или ставить нелицензионное ПО. Подробнее — в [CONTRIBUTING.md](https://github.com/Alpha-Oi/field-tech-guide/blob/main/CONTRIBUTING.md).
+  - type: dropdown
+    id: area
+    attributes:
+      label: К чему относится
+      options:
+        - Этапы и шаги (тексты)
+        - Страница-гайд
+        - Памятка на заявку и отчёты
+        - Прайс и акт
+        - Сборка и проверки
+        - Документация
+        - Другое
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: Какую задачу нужно решить
+      description: Что сейчас не получается или неудобно — для мастера, техдира или заказчика.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Что предлагаете
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Какие ещё варианты рассматривали
+  - type: checkboxes
+    id: no-private-data
+    attributes:
+      label: Проверка перед отправкой
+      options:
+        - label: В описании и во вложениях нет данных компании и клиентов
+          required: true

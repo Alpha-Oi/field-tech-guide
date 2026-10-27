@@ -1,0 +1,40 @@
+name: CI
+
+# Тесты, проверка контента, проверка на утечку внутренних данных и проверка, что график docs/img/steps-by-stage.svg не устарел.
+# Локальных приватных данных в репозитории нет, поэтому проверка утечки идёт без файла слов-маркеров:
+# только запрещённые расширения и пути к дискам.
+# Логику страницы проверяют тесты через node. REQUIRE_NODE=1 делает отсутствие node провалом:
+# без неё сотни проверок страницы молча пропустились бы при зелёном результате.
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      REQUIRE_NODE: "1"
+    steps:
+      - uses: actions/checkout@v4.2.2
+
+      - uses: actions/setup-python@v5.6.0
+        with:
+          python-version: "3.12"
+
+      - uses: actions/setup-node@v4.4.0
+        with:
+          node-version: "22"
+
+      - name: Проверка (тесты, сборка, утечки, график)
+        run: python -m unittest discover -s guide/tests -t . && python guide/build.py --check --lenient-vars && python tools/check_public.py && python tools/make_charts.py --check
+
+      - name: Строгая проверка демо-профиля (без --lenient-vars)
+        run: python guide/build.py --check
+
+      - name: Сборка демо
+        run: python guide/build.py --out dist

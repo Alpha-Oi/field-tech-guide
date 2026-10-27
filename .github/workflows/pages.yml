@@ -1,0 +1,70 @@
+name: Pages
+
+# Публикует демо-версию гайда (нейтральный профиль) на GitHub Pages.
+# Настоящий гайд с данными компании собирается только локально и сюда не попадает.
+# Порядок: check (те же тесты и проверки, что в CI) -> build (сборка демо) -> deploy (публикация).
+# Права на запись в Pages и токен-удостоверение выдаются только задаче deploy.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      REQUIRE_NODE: "1"
+    steps:
+      - uses: actions/checkout@v4.2.2
+
+      - uses: actions/setup-python@v5.6.0
+        with:
+          python-version: "3.12"
+
+      - uses: actions/setup-node@v4.4.0
+        with:
+          node-version: "22"
+
+      - name: Проверка (тесты, сборка, утечки, график)
+        run: python -m unittest discover -s guide/tests -t . && python guide/build.py --check --lenient-vars && python tools/check_public.py && python tools/make_charts.py --check
+
+  build:
+    needs: check
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4.2.2
+
+      - uses: actions/setup-python@v5.6.0
+        with:
+          python-version: "3.12"
+
+      - name: Сборка демо
+        run: python guide/build.py --out dist
+
+      - uses: actions/upload-pages-artifact@v3.0.1
+        with:
+          path: dist
+
+  deploy:
+    needs: [check, build]
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4.0.5

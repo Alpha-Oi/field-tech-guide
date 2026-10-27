@@ -1,0 +1,11 @@
+{
+  "name": "fixture",
+  "vars": {
+    "app_name": "Приложение службы",
+    "dispatcher_handle": "@dispatcher",
+    "techdir_name": "техдир",
+    "link_play": "https://example.com/google-play",
+    "link_apple": "https://example.com/app-store",
+    "spare_var": "лишнее значение"
+  }
+}

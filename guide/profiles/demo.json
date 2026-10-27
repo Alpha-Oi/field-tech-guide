@@ -1,0 +1,28 @@
+{
+  "name": "demo",
+  "vars": {
+    "app_name": "Приложение службы",
+    "link_play": "https://example.com/google-play",
+    "link_apple": "https://example.com/app-store",
+    "dispatcher_handle": "@dispatcher",
+    "techdir_nom": "техдир",
+    "techdir_gen": "техдира",
+    "techdir_dat": "техдиру",
+    "techdir_ins": "техдиром",
+    "bootable_image_name": "мультизагрузочный образ",
+    "software_pack_name": "пакет программ",
+    "price_driver": "120–160",
+    "price_cmos": "150",
+    "price_cleaning": "1200",
+    "price_psu": "3500",
+    "price_board": "9000",
+    "price_cpu": "12000",
+    "price_callcenter_install": "700–900",
+    "client_app_name": "приложение для клиентов",
+    "client_cashback": "5%",
+    "balance_amount": "350",
+    "mod_prepayment": "800",
+    "master_rate_high": "60%",
+    "master_rate_low": "45%"
+  }
+}
