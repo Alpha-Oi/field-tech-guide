@@ -8,7 +8,7 @@
 [![Зависимости: 0](https://img.shields.io/badge/dependencies-0-brightgreen.svg)](#качество)
 [![Демо](https://img.shields.io/badge/demo-GitHub%20Pages-informational.svg)](https://alpha-oi.github.io/field-tech-guide/)
 
-Репозиторий: <https://github.com/Alpha-Oi/field-tech-guide>. Ссылки на репозиторий, CI и демо заработают после публикации: пока репозитория на GitHub нет, они ведут в пустоту.
+**[Живое демо](https://alpha-oi.github.io/field-tech-guide/)** · [Релизы](https://github.com/Alpha-Oi/field-tech-guide/releases) · [Журнал изменений](CHANGELOG.md) · [Архитектура](docs/architecture.md)
 
 <p align="center">
   <img src="docs/img/hero-phone-360.png" width="320" alt="Первый экран гайда на телефоне: прогресс «3 из 84», подсказка «До заявок осталось 22 шага», заголовок «Этап 1. Старт: приложение и чат мастера» и первый шаг с отметкой «Сделано»">
@@ -152,7 +152,7 @@ sequenceDiagram
   python -m unittest discover -s guide/tests -t . && python guide/build.py --check && python tools/check_public.py && python tools/make_charts.py --check
   ```
 
-- **CI.** Workflow `.github/workflows/ci.yml` (проверка на каждый push и pull request) и `.github/workflows/pages.yml` (публикация демо на GitHub Pages) настроены, но репозитория на GitHub пока нет и ни один из них ещё не запускался: бейдж CI и демо заработают после публикации.
+- **CI.** Workflow `.github/workflows/ci.yml` (проверка на каждый push и pull request) и `.github/workflows/pages.yml` (публикация демо на GitHub Pages) работают: CI проходит на каждый push и pull request, демо автоматически выкатывается на GitHub Pages. Версии действий закреплены и обновляются через Dependabot.
 
 ## Быстрый старт
 
@@ -164,7 +164,7 @@ cd field-tech-guide
 python guide/build.py
 ```
 
-В папке `dist/` появятся `index.html`, `guide.md` и `for-techdir.md` с демо-профилем и демо-прайсом. Откройте `dist/index.html` в браузере двойным щелчком: сервер не нужен. (Клонирование заработает после публикации репозитория.)
+В папке `dist/` появятся `index.html`, `guide.md` и `for-techdir.md` с демо-профилем и демо-прайсом. Откройте `dist/index.html` в браузере двойным щелчком: сервер не нужен.
 
 Проверить контент, профиль и прайс без сборки: `python guide/build.py --check`. Ошибки печатаются по-русски с указанием места.
 
@@ -250,5 +250,5 @@ dist/                   (не в git) собранное демо
 - Real company data never enters the repository: it lives in the git-ignored `private/` folder, and `python tools/check_public.py` guards against leaks.
 - Build the demo with `python guide/build.py` (output in `dist/`); validate only with `python guide/build.py --check`.
 - Build your own guide: copy `guide/profiles/demo.json` to `private/profile.json`, replace the values, then run `python guide/build.py --profile private/profile.json --pricelist private/pricelist.json --out private/dist`.
-- The CI and Pages workflows are configured but have not run yet, because the repository is not published: they start after publication.
+- CI runs on every push and pull request; the demo is deployed to GitHub Pages automatically: <https://alpha-oi.github.io/field-tech-guide/>.
 - Contributing: [CONTRIBUTING.md](CONTRIBUTING.md). License: MIT, see [LICENSE](LICENSE).

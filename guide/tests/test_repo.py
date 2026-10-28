@@ -1057,7 +1057,7 @@ class ReadmeTests(unittest.TestCase):
         self.assertIn("docs/img/steps-by-stage.svg", local)
         self.assertIn("docs/img/social-preview.png", text)
 
-    def test_remote_images_are_only_the_badges_and_published_links_are_marked_as_not_working_yet(self):
+    def test_remote_images_are_only_the_badges_and_published_links_are_present(self):
         text = self.readme()
         remote = [src for _, src in readme_images(text) if src.startswith("http")]
         self.assertTrue(remote)
@@ -1065,7 +1065,7 @@ class ReadmeTests(unittest.TestCase):
             self.assertTrue(any(f"//{host}/" in src for host in BADGE_HOSTS), src)
         for address in ("https://github.com/Alpha-Oi/field-tech-guide", "https://alpha-oi.github.io/field-tech-guide/"):
             self.assertIn(address, text)
-        self.assertIn("заработают после публикации", text)
+        self.assertNotIn("заработают после публикации", text)
 
     def test_every_local_link_points_to_an_existing_file_or_a_project_document(self):
         missing = []
@@ -1119,12 +1119,13 @@ class ReadmeTests(unittest.TestCase):
             self.assertIn(name, block, f"на диаграмме нет «{name}»")
         self.assertIn("Отчёт", block)
 
-    def test_workflows_are_described_as_configured_not_as_running(self):
+    def test_workflows_are_described_as_running_after_publication(self):
         for rel in ("README.md", "CHANGELOG.md"):
             text = read_repo_file(self, rel)
-            self.assertIn("настроены", text, rel)
-            self.assertIn("после публикации", text, rel)
-            self.assertNotIn("v0.1.0", text, rel)
+            self.assertNotIn("ещё не опубликован", text, rel)
+            self.assertNotIn("заработают после публикации", text, rel)
+            self.assertNotIn("ещё не запускались", text, rel)
+        self.assertIn("работают", read_repo_file(self, "README.md"))
 
     def test_states_the_real_number_of_tests(self):
         stated = re.search(r"\*\*Тесты: (\d+)\.\*\*", self.readme())
